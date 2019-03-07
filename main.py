@@ -1,21 +1,41 @@
-#!env/bin/python
+#!./env/bin/python
 
 import pymesh
 import pyrender
 import numpy as np
+import trimesh
+import random
+import math
+
+points = np.array([[]]) # Simple 2D for initial testing
 
 
-points = np.array([ [0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0] ]) # Simple 2D for initial testing
+n_points = 1000
 
-triangulation = pymesh.triangle();
-triangulation.points = points;
 
-triangulation.max_area = 0.05
-triangulation.split_boundary = false;
+for i in range(n_points):
+    r = random.uniform(1.0,1.1)
+    theta = random.uniform(0,math.pi)
+    phi = random.uniform(0,math.pi * 2)
+   
+    x= r * math.sin(theta) * math.cos(phi)
+    y= r * math.sin(theta) * math.sin(phi)
+    z= r * math.cos(theta)
+    points = np.append(points,[[x,y,z]])
 
-triangulation.run()
+# Now just to check we have the target number of unique points
+print(points)
 
-mesh = triangulation.mesh;
+meshgen = pymesh.tetgen();
+meshgen.points = points;
+meshgen.verbosity = 2
+meshgen.run()
 
-m = pyrender.Mesg.from_trimesg(mesh)
+mesh = meshgen.mesh
 
+pymesh.save_mesh("output.stl", mesh)
+
+
+tm = trimesh.load('output.stl')
+
+tm.show()
