@@ -4,38 +4,45 @@ import pymesh
 import pyrender
 import numpy as np
 import trimesh
+import moderngl
 import random
 import math
+import pyglet
+from pyglet.gl import *
 
-points = np.array([[]]) # Simple 2D for initial testing
-
-
-n_points = 1000
+points = [] # Simple 2D for initial testing
+n_points = 100000
 
 
 for i in range(n_points):
-    r = random.uniform(1.0,1.1)
-    theta = random.uniform(0,math.pi)
-    phi = random.uniform(0,math.pi * 2)
-   
+    r = random.gauss(1,0.05)
+
+    theta = random.random() * math.pi
+    phi = random.random() * math.pi * 2
+  
     x= r * math.sin(theta) * math.cos(phi)
     y= r * math.sin(theta) * math.sin(phi)
     z= r * math.cos(theta)
-    points = np.append(points,[[x,y,z]])
+    points.append([x,y,z])
 
 # Now just to check we have the target number of unique points
-print(points)
+
+nppoints = np.asarray(points)
 
 meshgen = pymesh.tetgen();
 meshgen.points = points;
-meshgen.verbosity = 2
+meshgen.verbosity = 1
 meshgen.run()
 
-mesh = meshgen.mesh
-
-pymesh.save_mesh("output.stl", mesh)
+mesh = pymesh.subdivide(meshgen.mesh, order = 1, method="loop")
 
 
+
+print(mesh.faces)
+
+pymesh.save_mesh("output.stl", mesh) # For debugging purposes
 tm = trimesh.load('output.stl')
-
-tm.show()
+pyrendermesh = pyrender.Mesh.from_trimesh(tm,smooth=False)
+scene = pyrender.Scene()
+scene.add(pyrendermesh)
+pyrender.Viewer(scene, use_raymond_lighting=True)
