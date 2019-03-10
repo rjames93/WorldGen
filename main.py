@@ -7,7 +7,7 @@ import math
 import uuid
 import sys
 from generateMesh import generateMesh
-from continents import Continent
+from continents import Continent, genContinents
 
 
 mesh = generateMesh(1000)
@@ -29,24 +29,4 @@ val = np.zeros(mesh.num_faces)
 mesh.set_attribute("continentID",val);
 
 
-
-nContinents = random.randint(2,12) 
-Continents = []
-
-cont = Continent(uuid.uuid4(),1)
-cont.mesh = mesh
-cont.stepFill()
-cont.stepFill()
-cont.stepFill()
-
-#for x in range(nContinents):
-#    continentid = uuid.uuid4()
-#    randomFaceElementNumber = random.randint(0,len(mesh.faces))
-#    Continents.append(Continent(continentid,randomFaceElementNumber))
-#    Continents[x].mesh = mesh
-
-
-#for x in range(1):
-#    for continent in Continents:
-#            continent.stepFill()
-
+continents = genContinents(mesh)
