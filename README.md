@@ -11,5 +11,5 @@ For pythonic requirements please see requirements.txt and/or `pip install -r req
 
 # Submodules
 
-PyMesh <- As the name suggests does the mesh handling. Please see their documentation for the installation process
-glfw <- Handles creating a cross-platform window and opengl context
+- PyMesh <- As the name suggests does the mesh handling. Please see their documentation for the installation process
+- glfw <- Handles creating a cross-platform window and opengl context
