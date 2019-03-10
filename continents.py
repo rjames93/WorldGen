@@ -5,6 +5,12 @@ import random
 import uuid
 
 def genContinents(mesh):
+    # Add the Continent ID attribute to the Mesh
+    mesh.add_attribute("continentID")
+    val = np.zeros(mesh.num_faces)
+    mesh.set_attribute("continentID",val);
+
+    
     nContinents = random.randint(4,12)
     Continents = []
 
@@ -33,6 +39,22 @@ class Continent:
     def __init__(self,continentid,startface):
         self.faces.append(startface)
         self.id = continentid
+    
+    def doesContain(self,faceID):
+        if faceID in faces:
+            return True
+        else:
+            return False
+
+    def sizeOfContinent(self):
+        size = 0.0
+        self.mesh.add_attribute("face_area")
+        facesizes = self.mesh.get_face_attribute("face_area")
+        
+        for face in self.faces:
+            size += facesizes[face]
+        return size
+
 
     def stepFill(self):
         # Get an array of the IDs of all the adjacent faces

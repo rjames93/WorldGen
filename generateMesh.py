@@ -26,6 +26,6 @@ def generateMesh(n_points):
     meshgen.verbosity = 0
     meshgen.run()
 
-    mesh = pymesh.subdivide(meshgen.mesh, order = 3, method="loop")
+    mesh = pymesh.subdivide(meshgen.mesh, order = 5, method="loop")
     mesh = meshgen.mesh
     return(mesh)
