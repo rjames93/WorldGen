@@ -8,9 +8,11 @@ import uuid
 import sys
 from generateMesh import generateMesh
 from continents import Continent, genContinents
+from render import renderMesh
+
 
 # Generate a spherical mesh to be used for the basis of the planetoid
-mesh = generateMesh(1000)
+mesh = generateMesh(10000)
 mesh.enable_connectivity()
 
 # Now we want to make continents. Continents will be used to add noise to the simulation (basic techtonics)
@@ -27,3 +29,4 @@ continents = genContinents(mesh)
 
 # Now we want to render the result
 
+renderMesh(mesh)
