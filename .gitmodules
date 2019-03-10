@@ -1,3 +1,6 @@
 [submodule "PyMesh"]
 	path = PyMesh
 	url = https://github.com/PyMesh/PyMesh.git
+[submodule "glfw"]
+	path = glfw
+	url = https://github.com/glfw/glfw.git
