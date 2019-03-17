@@ -8,7 +8,7 @@ import uuid
 import sys
 from generateMesh import generateMesh
 from continents import Continent, genContinents
-from render import renderLoop, renderMesh
+from rendering.window import Window
 
 
 # Generate a spherical mesh to be used for the basis of the planetoid
@@ -29,4 +29,3 @@ continents = genContinents(mesh)
 
 # Now we want to render the result
 
-renderLoop(mesh)
